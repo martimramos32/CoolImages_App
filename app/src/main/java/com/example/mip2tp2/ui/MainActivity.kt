@@ -3,9 +3,11 @@ package com.example.mip2tp2.ui
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mip2tp2.R
+import android.content.Context
 import android.content.Intent
 import android.view.Menu
 import android.view.MenuItem
@@ -27,6 +29,14 @@ class MainActivity : AppCompatActivity() {
     private lateinit var imageAdapter: ImageAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        // Evaluate Dark Theme Preference Initial State mapping securely avoiding flickers
+        val prefs = getSharedPreferences("theme_prefs", Context.MODE_PRIVATE)
+        val isDark = prefs.getBoolean("is_dark", false)
+        val targetMode = if (isDark) AppCompatDelegate.MODE_NIGHT_YES else AppCompatDelegate.MODE_NIGHT_NO
+        if (AppCompatDelegate.getDefaultNightMode() != targetMode) {
+            AppCompatDelegate.setDefaultNightMode(targetMode)
+        }
+
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -125,7 +135,21 @@ class MainActivity : AppCompatActivity() {
                 startActivity(Intent(this, FavoritesActivity::class.java))
                 true
             }
+            R.id.action_theme_toggle -> {
+                toggleTheme()
+                true
+            }
             else -> super.onOptionsItemSelected(item)
         }
+    }
+
+    private fun toggleTheme() {
+        val prefs = getSharedPreferences("theme_prefs", Context.MODE_PRIVATE)
+        val isCurrentlyDark = prefs.getBoolean("is_dark", false)
+        
+        val newMode = if (isCurrentlyDark) AppCompatDelegate.MODE_NIGHT_NO else AppCompatDelegate.MODE_NIGHT_YES
+        AppCompatDelegate.setDefaultNightMode(newMode)
+        
+        prefs.edit().putBoolean("is_dark", !isCurrentlyDark).apply()
     }
 }
