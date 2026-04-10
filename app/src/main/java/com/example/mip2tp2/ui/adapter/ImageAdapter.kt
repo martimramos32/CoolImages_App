@@ -8,6 +8,8 @@ import android.content.Intent
 import com.example.mip2tp2.data.model.UnsplashImage
 import com.example.mip2tp2.databinding.ItemImageBinding
 import com.example.mip2tp2.ui.ImageDetailActivity
+import com.example.mip2tp2.R
+import com.example.mip2tp2.data.repository.FavoritesManager
 
 /**
  * Adapter for the RecyclerView to display a list of Unsplash images.
@@ -15,7 +17,9 @@ import com.example.mip2tp2.ui.ImageDetailActivity
  * Glide to asynchronously load the image URLs.
  */
 class ImageAdapter(
-    private var images: List<UnsplashImage> = emptyList()
+    private var images: List<UnsplashImage> = emptyList(),
+    private val onFavoriteClick: ((UnsplashImage) -> Unit)? = null,
+    private val favoritesManager: FavoritesManager? = null
 ) : RecyclerView.Adapter<ImageAdapter.ImageViewHolder>() {
 
     /**
@@ -55,6 +59,17 @@ class ImageAdapter(
                 .load(image.urls.regular)
                 .centerCrop()
                 .into(binding.photoImageView)
+
+            // Dynamic Favorite Button Visual Resolution
+            val isFav = favoritesManager?.isFavorite(image.id) == true
+            binding.favoriteButton.setImageResource(if (isFav) R.drawable.ic_favorite_filled else R.drawable.ic_favorite_border)
+
+            // Isolated interaction scope explicitly forwarding click handling backwards via initialized lambdas natively natively
+            binding.favoriteButton.setOnClickListener {
+                onFavoriteClick?.invoke(image)
+                val newIsFav = favoritesManager?.isFavorite(image.id) == true
+                binding.favoriteButton.setImageResource(if (newIsFav) R.drawable.ic_favorite_filled else R.drawable.ic_favorite_border)
+            }
 
             // Setup click navigation (Step 10)
             binding.root.setOnClickListener {

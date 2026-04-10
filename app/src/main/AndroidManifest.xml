@@ -28,6 +28,12 @@
             android:label="Image Details"
             android:theme="@style/Theme.MIP2tp2" />
 
+        <activity
+            android:name=".ui.FavoritesActivity"
+            android:exported="false"
+            android:label="Favorites"
+            android:theme="@style/Theme.MIP2tp2" />
+
     </application>
 
 </manifest>

@@ -79,3 +79,13 @@ Ecrã de Detalhes (Extension 1) - Criar um novo ecrã que se abre ao clicar numa
 
 **Result:**
 A IA criou a ImageDetailActivity e o seu layout, e adicionou o clique no ImageAdapter para abrir o novo ecrã com a foto em grande com as devidas informações(autor, descrição caso haja e o id da imagem.).
+
+## Prompt 9
+**Goal:**
+Sistema de Favoritos (Extension 2) - Criar a lógica para guardar até 5 imagens favoritas no armazenamento local e permitir que o utilizador as visualize num novo ecrã.
+
+**Prompt used:**
+"I have updated `docs/09_features_extension.md` with the plan for Extension 2 (Favorites System). Please read the updated file. Execute Steps 11, 12, 13, and 14. Implement a simple local storage to save up to 5 favorite images. Add a heart button to the layouts to toggle favorites and create a new Activity to display the favorites list. Ensure the UI updates correctly when an item is added or removed. Generate the code for these steps."
+
+**Result:**
+A IA implementou o armazenamento local, adicionou os botões de favorito nos ecrãs e criou a atividade para listar os favoritos com sucesso num ecrã à parte.
