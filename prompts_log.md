@@ -99,3 +99,13 @@ Cache Avançado e Paginação (Extension 3) - Implementar a regra de manter 50 i
 
 **Result:**
 A IA implementou a paginação na lista, garantindo o limite de 50 itens em cache e adicionou a barra de carregamento no fundo ao fazer scroll para baixo. A IA também implementou o sistema de cache, garantindo que a aplicação mantém sempre 50 itens em cache e remove os itens não favoritos quando o limite é atingido. Guarda também em cache as imagens favoritas.
+
+## Prompt 11
+**Goal:**
+Polimento Visual (UI/UX) - Melhorar o aspeto da aplicação com base no Material Design, adicionando cantos arredondados, sombras, melhores margens e tipografia.
+
+**Prompt used:**
+"I have added a new file `docs/10_ui_polish.md` detailing the final visual improvements. Please read this file. Execute Steps 18, 19, and 20. Modify the XML layout files to use `MaterialCardView` with rounded corners, elevation, and margins. Improve the typography and colors. CRITICAL INSTRUCTION: You must strictly ONLY modify the UI files (XMLs) and potentially minor Adapter color state logic. Do NOT alter any of the caching, pagination, or network logic we built in the previous steps. Generate the UI code."
+
+**Result:**
+A IA atualizou os ficheiros XML com Material Cards, sombras e margens, deixando a aplicação com um aspeto muito mais polido e profissional, sem quebrar toda a lógica realizada.
