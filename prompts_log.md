@@ -19,3 +19,13 @@ Data Model - Criar as classes de dados em Kotlin (UnsplashImage, ImageUrls, User
 
 **Result:**
 A IA criou o ficheiro UnsplashImage.kt com as classes de dados corretas para o ID, os URLs da imagem, descrição da imagem e dados do utilizador.
+
+## Prompt 3
+**Goal:**
+API Service Setup com Segurança - Criar a ligação à internet com o Retrofit, configurando a aplicação para ler a chave de acesso a partir do ficheiro seguro `local.properties` usando a ferramenta interna `BuildConfig`.
+
+**Prompt used:**
+"Read `docs/07_api_usage.md` and the data classes created in Step 2. Then, execute ONLY Step 3 from `docs/08_implementation_plan.md`. Create the Retrofit API interface to fetch random images. IMPORTANT SECURITY REQUIREMENT: Do not hardcode the API key. Configure the `app/build.gradle` file to read a property named `UNSPLASH_ACCESS_KEY` from the `local.properties` file and expose it via a `BuildConfig` field. Then, use this `BuildConfig` variable in the Retrofit interface for the Authorization header. Generate only the code for this step and do not proceed to Step 4."
+
+**Result:**
+A IA configurou o ficheiro build.gradle para ler a chave e criou a interface do Retrofit utilizando o BuildConfig, mantendo a chave secreta fora do código fonte para manter a segurança da nossa aplicação.
