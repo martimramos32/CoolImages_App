@@ -39,3 +39,13 @@ Repository e ViewModel - Implementar a arquitetura MVVM criando um Repositório 
 
 **Result:**
 A IA criou o ImageRepository para fazer o pedido ao Unsplash, o MainViewModel com LiveData para guardar a lista de fotografias e o estado da barra de carregamento e o RetrofitClient para configurar o Retrofit, conectando o Gson e o OkHttp(logging interceptor que é bastante útil para fazer debug de erros da API, caso existam).
+
+## Prompt 5
+**Goal:**
+UI Layout Design - Desenhar a interface visual em XML. Criar o ecrã principal com a lista e o carregamento, e criar o design individual que cada fotografia vai ter dentro da lista.
+
+**Prompt used:**
+"Review the project structure. Then, execute ONLY Step 5 from `docs/08_implementation_plan.md`. Create the XML layout for `activity_main.xml` including a `RecyclerView`, a `ProgressBar` for loading, and a `SwipeRefreshLayout` for the refresh action. Also, create a separate XML layout file (e.g., `item_image.xml`) for the individual items in the RecyclerView, which should contain an `ImageView` for the photo and a `TextView` for the author's name. Strictly use standard Android XML Views. DO NOT use Jetpack Compose. Generate only the XML code for this step and do not proceed to Step 6."
+
+**Result:**
+A IA gerou o activity_main.xml com o SwipeRefreshLayout e o RecyclerView, e também criou o item_image.xml para definir a aparência individual de cada fotografia na lista.
