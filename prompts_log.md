@@ -49,3 +49,33 @@ UI Layout Design - Desenhar a interface visual em XML. Criar o ecrã principal c
 
 **Result:**
 A IA gerou o activity_main.xml com o SwipeRefreshLayout e o RecyclerView, e também criou o item_image.xml para definir a aparência individual de cada fotografia na lista.
+
+## Prompt 6
+**Goal:**
+RecyclerView Adapter - Criar a classe do adaptador (Adapter) que faz a ponte entre a lista de dados (fotografias) e o ficheiro visual individual (`item_image.xml`).
+
+**Prompt used:**
+"Review the layouts created in Step 5 and the data model from Step 2. Then, execute ONLY Step 6 from `docs/08_implementation_plan.md`. Create the `RecyclerView.Adapter` (e.g., `ImageAdapter`) to bind the list of `UnsplashImage` objects to the `item_image.xml` layout. Use the image loading library specified in Step 1 (Glide or Coil) to load the `regular` URL into the `ImageView`, and set the `user.name` in the `TextView`. Generate only the code for this step and do not proceed to Step 7."
+
+**Result:**
+A IA gerou a classe ImageAdapter, configurando o ViewHolder para associar o nome do autor ao TextView e usando a biblioteca de imagens para carregar o URL para o ImageView.
+
+## Prompt 7
+**Goal:**
+Connect UI to Logic - Ligar a interface visual à lógica no `MainActivity`, configurando a lista de imagens, o ecrã de carregamento e a ação de atualizar a página.
+
+**Prompt used:**
+"Review the code generated in Steps 4, 5, and 6. Then, execute ONLY Step 7 from `docs/08_implementation_plan.md`. In `MainActivity.kt`, initialize the `RecyclerView` with the adapter, observe the `LiveData` from the `MainViewModel` to update the list of images, and set up the refresh action (e.g., `SwipeRefreshLayout`) to fetch new images. Update the UI loading indicator based on the ViewModel's loading state. Generate only the code for this step. This is the final step of the base implementation."
+
+**Result:**
+A IA atualizou o MainActivity, ligando a lista visual ao adaptador e configurando a aplicação para reagir aos dados que chegam da internet.
+
+## Prompt 8
+**Goal:**
+Ecrã de Detalhes (Extension 1) - Criar um novo ecrã que se abre ao clicar numa fotografia da lista, passando os dados necessários para mostrar a imagem em ponto grande e as respetivas informações.
+
+**Prompt used:**
+"I have added a new file `docs/09_features_extension.md` with the plan for Extension 1 (Image Details Screen). Please read this new file. Then, execute Steps 8, 9, and 10 to implement this feature. Create the new Activity and its XML layout, and update the existing adapter to handle the click event and pass the data via Intent. Generate only the code for these three steps."
+
+**Result:**
+A IA criou a ImageDetailActivity e o seu layout, e adicionou o clique no ImageAdapter para abrir o novo ecrã com a foto em grande com as devidas informações(autor, descrição caso haja e o id da imagem.).

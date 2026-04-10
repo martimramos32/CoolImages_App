@@ -22,6 +22,12 @@
             </intent-filter>
         </activity>
 
+        <activity
+            android:name=".ui.ImageDetailActivity"
+            android:exported="false"
+            android:label="Image Details"
+            android:theme="@style/Theme.MIP2tp2" />
+
     </application>
 
 </manifest>

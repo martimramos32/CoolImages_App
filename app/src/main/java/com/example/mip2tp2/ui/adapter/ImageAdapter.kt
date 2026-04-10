@@ -4,8 +4,10 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import android.content.Intent
 import com.example.mip2tp2.data.model.UnsplashImage
 import com.example.mip2tp2.databinding.ItemImageBinding
+import com.example.mip2tp2.ui.ImageDetailActivity
 
 /**
  * Adapter for the RecyclerView to display a list of Unsplash images.
@@ -53,6 +55,18 @@ class ImageAdapter(
                 .load(image.urls.regular)
                 .centerCrop()
                 .into(binding.photoImageView)
+
+            // Setup click navigation (Step 10)
+            binding.root.setOnClickListener {
+                val context = binding.root.context
+                val intent = Intent(context, ImageDetailActivity::class.java).apply {
+                    putExtra(ImageDetailActivity.EXTRA_IMAGE_URL, image.urls.regular)
+                    putExtra(ImageDetailActivity.EXTRA_AUTHOR_NAME, image.user.name)
+                    putExtra(ImageDetailActivity.EXTRA_DESCRIPTION, image.description)
+                    putExtra(ImageDetailActivity.EXTRA_IMAGE_ID, image.id)
+                }
+                context.startActivity(intent)
+            }
         }
     }
 }
