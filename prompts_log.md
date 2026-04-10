@@ -29,3 +29,13 @@ API Service Setup com Segurança - Criar a ligação à internet com o Retrofit,
 
 **Result:**
 A IA configurou o ficheiro build.gradle para ler a chave e criou a interface do Retrofit utilizando o BuildConfig, mantendo a chave secreta fora do código fonte para manter a segurança da nossa aplicação.
+
+## Prompt 4
+**Goal:**
+Repository e ViewModel - Implementar a arquitetura MVVM criando um Repositório para gerir as chamadas à API e um ViewModel com LiveData para armazenar o estado de carregamento e a lista de imagens.
+
+**Prompt used:**
+"Review the code generated in Steps 2 and 3. Then, execute ONLY Step 4 from `docs/08_implementation_plan.md`. Create the `ImageRepository` class to handle data fetching from the API. Then, create the `MainViewModel` class. The ViewModel must use `LiveData` to expose two things to the UI: a List of `UnsplashImage` objects, and a `Boolean` representing the loading state (true when fetching, false when done). Generate only the code for this step and do not proceed to Step 5."
+
+**Result:**
+A IA criou o ImageRepository para fazer o pedido ao Unsplash, o MainViewModel com LiveData para guardar a lista de fotografias e o estado da barra de carregamento e o RetrofitClient para configurar o Retrofit, conectando o Gson e o OkHttp(logging interceptor que é bastante útil para fazer debug de erros da API, caso existam).
