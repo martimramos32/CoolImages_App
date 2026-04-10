@@ -42,3 +42,19 @@ Create a `FavoritesActivity` and a corresponding layout to display the saved ima
 
 **Step 14: Connect Favorite Actions**
 Update the ViewModel and the Adapter to handle the click on the heart button, saving or removing the image from the favorites list in the local storage.
+
+# Extension 3: Advanced Caching & Pagination
+
+## Feature Overview
+Maintain a local cache of up to 50 items (strictly excluding favorites). Implement an intelligent pre-fetching system during navigation: keep at least 10 items ahead and 10 behind the current scroll position. Display relative loading indicators (e.g., at the bottom of the list when fetching more items).
+
+## Implementation Plan (Extension 3)
+
+**Step 15: Advanced Caching Logic**
+Update the local storage mechanism (Room or SharedPreferences) in the Repository. It must manage a cache limit of exactly 50 items. Ensure that items marked as 'Favorites' are never evicted from this limit. 
+
+**Step 16: Pre-fetching (Sliding Window)**
+Update the `MainViewModel` and `MainActivity` to implement a scroll listener on the `RecyclerView`. Detect when the user is within 10 items of the bottom (or top) of the list and trigger an API call to pre-fetch the next batch of images.
+
+**Step 17: Relative Loading Indicator**
+Modify the UI to handle pagination loading. Instead of a fullscreen loading bar, use a relative loading indicator (e.g., adding a temporary 'Loading' item to the bottom of the `RecyclerView` adapter, or a small progress bar below the list) that specifically shows when pre-fetching is happening.

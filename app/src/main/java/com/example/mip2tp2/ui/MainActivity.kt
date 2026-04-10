@@ -1,10 +1,10 @@
 package com.example.mip2tp2.ui
 
 import android.os.Bundle
-import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.mip2tp2.R
 import android.content.Intent
 import android.view.Menu
@@ -53,15 +53,33 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupRecyclerView() {
+        val linearLayoutManager = LinearLayoutManager(this@MainActivity)
         binding.recyclerView.apply {
-            layoutManager = LinearLayoutManager(this@MainActivity)
+            layoutManager = linearLayoutManager
             adapter = imageAdapter
         }
+        
+        // Setup Infinite Scroll Listener Pagination Ruleset (Step 16)
+        binding.recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+                if (dy > 0) { // Sliding Downards strictly
+                    val visibleItemCount = linearLayoutManager.childCount
+                    val totalItemCount = linearLayoutManager.itemCount
+                    val pastVisibleItems = linearLayoutManager.findFirstVisibleItemPosition()
+
+                    // Predictively hit pre-fetch bounds intelligently sliding threshold mapping
+                    if ((visibleItemCount + pastVisibleItems) >= (totalItemCount - 5)) {
+                        viewModel.fetchRandomImages(isInitial = false)
+                    }
+                }
+            }
+        })
     }
 
     private fun setupSwipeRefresh() {
         binding.swipeRefreshLayout.setOnRefreshListener {
-            viewModel.fetchRandomImages()
+            viewModel.fetchRandomImages(isInitial = true)
         }
     }
 
@@ -73,18 +91,20 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        // Observe the loading state to toggle visual indicators
+        // Observe the loading state to toggle visual indicators gracefully
         viewModel.isLoading.observe(this) { isLoading ->
-            // Update SwipeRefreshLayout's native rotating indicator
             binding.swipeRefreshLayout.isRefreshing = isLoading
 
-            // Toggle the central screen ProgressBar dynamically 
-            // (Only visible initially when list is empty)
             if (isLoading && imageAdapter.itemCount == 0) {
-                binding.progressBar.visibility = View.VISIBLE
+                binding.progressBar.visibility = android.view.View.VISIBLE
             } else {
-                binding.progressBar.visibility = View.GONE
+                binding.progressBar.visibility = android.view.View.GONE
             }
+        }
+        
+        // Explicitly map independent progression bar indicators
+        viewModel.isPaginating.observe(this) { isPaginating ->
+             binding.paginationProgressBar.visibility = if (isPaginating) android.view.View.VISIBLE else android.view.View.GONE
         }
     }
 

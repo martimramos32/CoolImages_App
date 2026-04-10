@@ -1,50 +1,59 @@
 package com.example.mip2tp2.ui.viewmodel
 
+import android.app.Application
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.mip2tp2.data.model.UnsplashImage
+import com.example.mip2tp2.data.repository.FavoritesManager
 import com.example.mip2tp2.data.repository.ImageRepository
 import kotlinx.coroutines.launch
 
 /**
- * ViewModel to manage UI-related data in a lifecycle-conscious way.
- * Exposes images and loading states using LiveData.
+ * AndroidViewModel to manage UI-related data passing Context efficiently down repository structures.
+ * Exposes images and complex pagination/loading states using LiveData natively.
  */
-class MainViewModel(
-    private val repository: ImageRepository = ImageRepository()
-) : ViewModel() {
+class MainViewModel(application: Application) : AndroidViewModel(application) {
 
-    // LiveData for the list of random images
+    private val favoritesManager = FavoritesManager(application)
+    private val repository = ImageRepository(favoritesManager = favoritesManager)
+
+    // LiveData for the list of cached images
     private val _images = MutableLiveData<List<UnsplashImage>>()
     val images: LiveData<List<UnsplashImage>> get() = _images
 
-    // LiveData for the loading state (true when fetching, false when done)
+    // LiveData for initial full-clear loading state
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> get() = _isLoading
+    
+    // LiveData specifically tailored for relative pagination indication states
+    private val _isPaginating = MutableLiveData<Boolean>()
+    val isPaginating: LiveData<Boolean> get() = _isPaginating
 
     init {
-        // Fetch initially when the ViewModel is created
-        fetchRandomImages()
+        // Automatically execute initial 20 size logic efficiently
+        fetchRandomImages(isInitial = true)
     }
 
     /**
-     * Launches a coroutine to fetch random images from the repository and
-     * updates the exposed LiveData states accordingly.
+     * Launches a dynamic fetch request intelligently splitting between base resets (20) and relative paginations (10).
      */
-    fun fetchRandomImages() {
+    fun fetchRandomImages(isInitial: Boolean = true) {
+        // Thread Lock blocking overlapping asynchronous queries dynamically
+        if (_isLoading.value == true || _isPaginating.value == true) return
+        
         viewModelScope.launch {
-            _isLoading.value = true
+            if (isInitial) _isLoading.value = true else _isPaginating.value = true
             try {
-                val result = repository.getRandomImages()
+                val count = if (isInitial) 20 else 10 
+                val result = repository.getRandomImages(count, isInitial)
                 _images.value = result
             } catch (e: Exception) {
-                // In a production app, we would also expose an error LiveData.
-                // For now, print the error trace.
+                // Ignore silent constraints explicitly on standard tests
                 e.printStackTrace()
             } finally {
-                _isLoading.value = false
+                if (isInitial) _isLoading.value = false else _isPaginating.value = false
             }
         }
     }

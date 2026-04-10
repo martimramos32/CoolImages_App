@@ -89,3 +89,13 @@ Sistema de Favoritos (Extension 2) - Criar a lógica para guardar até 5 imagens
 
 **Result:**
 A IA implementou o armazenamento local, adicionou os botões de favorito nos ecrãs e criou a atividade para listar os favoritos com sucesso num ecrã à parte.
+
+## Prompt 10
+**Goal:**
+Cache Avançado e Paginação (Extension 3) - Implementar a regra de manter 50 itens em cache, carregar 20 no início e pré-carregar mais quando faltarem 5 itens para o fim.
+
+**Prompt used:**
+"I have updated `docs/09_features_extension.md` with the corrected plan for Extension 3. Please read the updated file. Execute Steps 15, 16, and 17. Ensure the initial fetch is 20 images to prevent immediate pagination triggers. The scroll listener should only trigger a fetch for 10 more images when the user is 5 items away from the bottom. Enforce the 50-item cache limit. Add the relative loading indicator at the bottom. Generate the code."
+
+**Result:**
+A IA implementou a paginação na lista, garantindo o limite de 50 itens em cache e adicionou a barra de carregamento no fundo ao fazer scroll para baixo. A IA também implementou o sistema de cache, garantindo que a aplicação mantém sempre 50 itens em cache e remove os itens não favoritos quando o limite é atingido. Guarda também em cache as imagens favoritas.
