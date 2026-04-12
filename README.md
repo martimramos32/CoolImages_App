@@ -11,6 +11,8 @@ O projeto consome a **Unsplash API** (especificamente o *endpoint* de fotografia
 ![Ecrã Principal da Lista de Imagens](images/image.png)
 ![Ecrã de Detalhes da Fotografia](images/image_2.png)
 ![Ecrã da Lista de Favoritos](images/image_3.png)
+![Ecrã Principal em Dark Mode](images/image_4.png)
+
 
 ## Instruções de Execução
 Para compilar e correr o projeto corretamente, segue estes passos:
